@@ -30,9 +30,7 @@
                             *
                         </Import-Package>
                         <Export-Package>
-                            kent.service.api,
-                            kent.service.api.EntitySample,
-                            kent.service.api.EntitySampleService
+                            kent.service.api
                         </Export-Package>
                     </instructions>
                 </configuration>

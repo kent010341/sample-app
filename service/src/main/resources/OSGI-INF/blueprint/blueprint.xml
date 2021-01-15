@@ -9,10 +9,8 @@
     <jpa:enable />
     <tx:enable-annotations />
 
+    <bean class="kent.service.EntitySampleServiceImpl" id="entitySampleService"/>
     
-    <service id="entitySampleService"
-             interface="kent.service.api.EntitySampleService">
-        <bean class="kent.service.EntitySampleServiceImpl"/>
-    </service>
+    <service interface="kent.service.api.EntitySampleService" ref="entitySampleService"/>
     
 </blueprint>
