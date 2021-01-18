@@ -11,6 +11,5 @@
     
     <bean class="kent.service.EntitySampleServiceImpl" id="entitySampleService"/>
     <service interface="kent.service.api.EntitySampleService" ref="entitySampleService"/>
-
     
 </blueprint>

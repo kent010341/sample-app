@@ -16,9 +16,9 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author kent_chen
  */
-//@Component
-@Command(scope = "myservice", name = "add", description = "description: myservice/add")
+
 @Service
+@Command(scope = "myservice", name = "add", description = "description: myservice/add")
 public class AddCommand implements Action {
     
 //    @Reference
