@@ -61,12 +61,6 @@
             <version>5.0.6.Final</version>
         </dependency>
         
-<!--        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>5.0.6.Final</version>
-        </dependency>-->
-        
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
@@ -116,30 +110,18 @@
             <scope>test</scope>
         </dependency>
         
-<!--        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>1.7.2.RELEASE</version>
-        </dependency>-->
-        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>4.0.9.RELEASE</version>
             <scope>test</scope>
         </dependency>
-        
-<!--        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-        
+              
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
             <version>2.2.4</version>
-        </dependency>-->
+        </dependency>
     </dependencies>
     
     <build>
