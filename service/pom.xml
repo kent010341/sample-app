@@ -10,11 +10,12 @@
     <packaging>bundle</packaging>
     
     <dependencies>
-<!--        <dependency>
+        <dependency>
             <groupId>org.apache.aries.jpa</groupId>
             <artifactId>org.apache.aries.jpa.api</artifactId>
             <version>2.7.2</version>
-        </dependency>-->
+        </dependency>
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -60,12 +61,6 @@
             <version>5.0.6.Final</version>
         </dependency>
         
-<!--        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>5.0.6.Final</version>
-        </dependency>-->
-        
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
@@ -85,6 +80,12 @@
         </dependency>
         
         <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
+            <version>4.2.10</version>
+        </dependency>
+        
+        <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>javax.transaction-api</artifactId>
             <version>1.2</version>
@@ -97,14 +98,20 @@
         </dependency>
         
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.38</version>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.cmpn</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-services-maven-plugin</artifactId>
+                <version>4.3.0</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -112,9 +119,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
+                        <Karaf-Commands>*</Karaf-Commands>
                         <Meta-Persistence>META-INF/persistence.xml</Meta-Persistence>
-                        <!-- <Private-Package>
-                            
+                        <!-- <Private-Package>    
                         </Private-Package> -->
                         <Import-Package>
                             javax.persistence;version="[2,3)",
