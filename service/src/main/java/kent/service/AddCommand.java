@@ -5,11 +5,16 @@
  */
 package kent.service;
 
+import kent.service.api.EntitySampleService;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.osgi.service.component.annotations.Component;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.blueprint.container.BlueprintContainer;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -21,16 +26,23 @@ import org.osgi.service.component.annotations.Reference;
 @Command(scope = "myservice", name = "add", description = "description: myservice/add")
 public class AddCommand implements Action {
     
-//    @Reference
-//    private EntitySampleService ess;
-    
     @Argument(index = 0, name = "val1", description = "val1 of EntitySameple", 
             required = true, multiValued = false)
     String val1;
     
     @Override
     public Object execute() throws Exception {
-//        ess.add(val1);
+        BlueprintContainer container;
+        Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+        BundleContext bundleContext = bundle.getBundleContext();
+        String symbolicname = (String) bundle.getHeaders().get("Bundle-SymbolicName");
+        ServiceReference[] refs = bundleContext.getServiceReferences(
+                BlueprintContainer.class.getName(),
+                "(osgi.blueprint.container.symbolicname=" + symbolicname + ")");
+        container = (BlueprintContainer) bundleContext.getService(refs[0]);
+        
+        EntitySampleService ess = (EntitySampleService)container.getComponentInstance("entitySampleService");
+        ess.add(val1);
         System.out.println(val1);
         return null;
     }

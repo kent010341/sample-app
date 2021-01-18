@@ -10,11 +10,13 @@ import kent.service.api.EntitySample;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import org.osgi.service.component.annotations.Component;
 
 /**
  *
  * @author kent_chen
  */
+//@Component(service = EntitySampleService.class)
 @Transactional
 public class EntitySampleServiceImpl implements EntitySampleService {
     
@@ -30,6 +32,7 @@ public class EntitySampleServiceImpl implements EntitySampleService {
     public void add(String val1) {
         EntitySample es = new EntitySample();
         es.setVal1(val1);
+        
         em.persist(es);
     }
     
