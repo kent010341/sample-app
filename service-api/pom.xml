@@ -10,10 +10,15 @@
     <packaging>bundle</packaging>
     
     <dependencies>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.0.6.Final</version>
+        </dependency> -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.0</version>
         </dependency>
     </dependencies>
     
@@ -27,12 +32,13 @@
                 <configuration>
                     <instructions>
                         <Import-Package>
+                            javax.persistence;version="[2,3)",
+                            org.hibernate.proxy,
+                            javassist.util.proxy,
                             *
                         </Import-Package>
                         <Export-Package>
-                            kent.service.api,
-                            kent.service.api.EntitySample,
-                            kent.service.api.EntitySampleService
+                            kent.service.api
                         </Export-Package>
                     </instructions>
                 </configuration>
