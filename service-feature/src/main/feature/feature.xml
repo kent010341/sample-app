@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features name="myservice" 
+          xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 
+                              http://karaf.apache.org/xmlns/features/v1.3.0">
+
+    <feature name="f-service-datasource" version="${project.version}">
+        <config name="org.ops4j.datasource-test">
+            osgi.jdbc.driver.class=com.mysql.cj.jdbc.Driver
+            dataSourceName=jdbc/mysql
+            user=root
+            password=root
+            url=jdbc:mysql://localhost:3306/test
+        </config>
+        <capability>
+            osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/mysql
+        </capability>
+    </feature>
+    
+    <feature name="f-service-api" version="${project.version}">
+        <feature>transaction</feature>
+        <feature>jndi</feature>
+        <feature>pax-jdbc-config</feature>
+        <!-- <feature>pax-jdbc-h2</feature> -->
+        <!--<feature>pax-jdbc-mysql</feature>-->
+        <feature>pax-jdbc-pool-dbcp2</feature>
+        <feature>jdbc</feature>
+        <feature dependency="true">aries-blueprint</feature>
+        <feature dependency="true">aries-proxy</feature>
+        <feature version="[2,3)">jpa</feature>
+        <feature version="[5,6)">hibernate</feature>
+        
+        <bundle start-level="70">mvn:mysql/mysql-connector-java/8.0.19</bundle>
+        <bundle>mvn:kent/service-api/${project.version}</bundle>
+    </feature>
+    
+    <feature name="f-service" version="${project.version}">
+        <feature>scr</feature>
+        <feature version="${project.version}">f-service-api</feature>
+        <bundle>mvn:kent/service-api/${project.version}</bundle>
+        <bundle>mvn:kent/service/${project.version}</bundle>
+    </feature>
+</features>

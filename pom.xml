@@ -26,5 +26,6 @@
     <modules>
         <module>service</module>
         <module>service-api</module>
+        <module>service-feature</module>
     </modules>
 </project>
