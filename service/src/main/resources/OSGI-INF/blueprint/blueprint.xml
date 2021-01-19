@@ -2,17 +2,47 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:jpa="http://aries.apache.org/xmlns/jpa/v2.0.0"
            xmlns:tx="http://aries.apache.org/xmlns/transactions/v2.0.0"
+           xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+           xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+           xmlns:cxf="http://cxf.apache.org/blueprint/core"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="
-               http://www.osgi.org/xmlns/blueprint/v1.0.0 https://osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-               http://aries.apache.org/xmlns/jpa/v2.0.0 http://aries.apache.org/schemas/jpa/jpa_20.xsd
-               http://aries.apache.org/xmlns/transactions/v2.0.0 http://aries.apache.org/schemas/transaction/transactionv20.xsd">
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 
+                               https://osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd 
+                               http://aries.apache.org/xmlns/jpa/v2.0.0 
+                               http://aries.apache.org/schemas/jpa/jpa_20.xsd 
+                               http://aries.apache.org/xmlns/transactions/v2.0.0 
+                               http://aries.apache.org/schemas/transaction/transactionv20.xsd 
+                               http://cxf.apache.org/blueprint/jaxws 
+                               http://cxf.apache.org/schemas/blueprint/jaxws.xsd 
+                               http://cxf.apache.org/blueprint/jaxrs 
+                               http://cxf.apache.org/schemas/blueprint/jaxrs.xsd 
+                               http://cxf.apache.org/blueprint/core 
+                               http://cxf.apache.org/schemas/blueprint/core.xsd">
 
     <jpa:enable />
     <tx:enable />
     <!-- <tx:enable-annotations /> -->
     
-    <bean class="kent.service.EntitySampleServiceImpl" id="entitySampleService"/>
-    <service interface="kent.service.api.EntitySampleService" ref="entitySampleService"/>
+    <cxf:bus id="cxfBus1">
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+    
+    <jaxrs:server id="myRestService" address="/webapi">
+        <jaxrs:providers>
+            <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+        </jaxrs:providers>
+        <jaxrs:serviceBeans>
+            <ref component-id="entitySampleService"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+    
+<!--    <bean id="entitySampleService" class="kent.service.EntitySampleServiceImpl">
+        <property name="entitySampleService" ref="entitySampleService"/>
+    </bean>-->
+    
+    <bean id="entitySampleService" class="kent.service.EntitySampleServiceImpl"/>
+    <service ref="entitySampleService" interface="kent.service.api.EntitySampleService"/>
     
 </blueprint>
