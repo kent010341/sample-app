@@ -38,7 +38,17 @@
     
     <feature name="f-service" version="${project.version}">
         <feature>scr</feature>
+        <feature>http</feature>
+        <feature>cxf</feature>
+        
+        <feature version="3.4.0" dependency="true">cxf-jaxrs</feature>
+        <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/2.10.2</bundle>
+        <!--<bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.2</bundle>-->
+        <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-databind/2.10.2</bundle>
+        <!--<bundle dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.10.2</bundle>-->
+        <!--<bundle dependency="true">mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.10.2</bundle>-->
         <feature version="${project.version}">f-service-api</feature>
+        
         <bundle>mvn:kent/service-api/${project.version}</bundle>
         <bundle>mvn:kent/service/${project.version}</bundle>
     </feature>
