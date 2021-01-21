@@ -1,14 +1,105 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-    <title>Resource Example</title>
+        <title>Kendo UI Demo</title>
+        <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet">
+        <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.default.min.css" rel="stylesheet">
+        <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jquery.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
     </head>
     <body>
-    <h2>Resource Example</h2>
+        <div id="example">
+            <div id="grid"></div>
+            <script>
+                $(function () {
+                    var ds = new kendo.data.DataSource({
+                            editable: true,
+                            transport: {
+                                read: {
+                                    url: "http://localhost:8181/cxf/webapi/EntitySample",
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    type: "GET"
+                                }, 
+//                                create: {
+//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
+//                                    contentType: "application/json",
+//                                    dataType: "json",
+//                                    type: "POST",
+//                                    data: function() {
+//                                        return {
+//                                            name: "demo_create",
+//                                            buydate: "demo_buydate"
+//                                        };
+//                                    }
+//                                },
+//                                update: {
+//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
+//                                    contentType: "application/json",
+//                                    dataType: "json",
+//                                    type: "PUT", 
+//                                    data: function() {
+//                                        return {
+//                                            name: "demo_create",
+//                                            buydate: "demo_buydate"
+//                                        };
+//                                    }
+//                                },
+//                                destroy: {
+//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
+//                                    contentType: "application/json",
+//                                    dataType: "json",
+//                                    type: "DELETE"
+//                                }
+//                            },
+//                            parameterMap: function (options, operation) {
+//                                if (operation !== "read" && options.models) {
+//                                    return { models: kendo.stringify(options.models) };
+//                                }
+//                            },
+                            /*schema: {
+                                data: function(response) {
+                                    console.log("OK");
+                                    return response.json;
+                                }
+                            },*/
+                            pageSize: 20
+                        }
+                    });
+
+                    ds.fetch(function() {
+                        console.log("fetch success, length:" + ds.view().length);
+                    });
+
+                    /*
+                    var ds = new kendo.data.DataSource({
+                        data: [{ContactName: "a", ContactTitle: "b", CompanyName: "c", Country: "d"}]
+                    });
+                    */
+                    
+                    
+                    var cols = [{field: "id"}, {field: "val1"}, {command: ["edit", "destroy"]}];
+                    //var cols = [{field: "ProductID"}, {field: "ProductName"}, {field: "UnitPrice"}, {field: "UnitsInStock"}, {field: "Discontinued"}];
+                    //var cols = [{field: "id"}, {field: "albumId"}, {field: "title"}, {field: "url"}, {field: "thumbnailUrl"}];
+                        
+                    $("#grid").kendoGrid({
+                        dataSource: ds,
+                        height: 800,
+                        toolbar: ["create"],
+                        groupable: true,
+                        sortable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: cols,
+                        editable: "inline"
+                    });
+                    
+                });
+            </script>
+        </div>
+
     </body>
 </html>
