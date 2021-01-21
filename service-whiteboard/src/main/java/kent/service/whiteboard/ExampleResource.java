@@ -12,8 +12,7 @@ import org.osgi.service.component.annotations.Component;
  * @author kent_chen
  */
 @Component(service = ExampleResource.class, 
-           property = {"osgi.http.whiteboard.resource.pattern=/example/*", 
+           property = {"osgi.http.whiteboard.resource.pattern=/web/*",
                "osgi.http.whiteboard.resource.prefix=/resources"})
-
 public class ExampleResource {
 }

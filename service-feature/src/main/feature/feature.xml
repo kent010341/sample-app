@@ -55,7 +55,7 @@
     
     <feature name="f-service-whiteboard" version="${project.version}">
         <feature>scr</feature>
-        <feature>web-http-whiteboard</feature>
+        <feature>http-whiteboard</feature>
         <bundle>mvn:kent/service-whiteboard/${project.version}</bundle>
     </feature>
 </features>
