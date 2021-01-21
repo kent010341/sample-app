@@ -60,26 +60,36 @@ public class EntitySampleServiceImpl implements EntitySampleService {
 
     @Override
     @POST
-    public void add(EntitySample es) {
+    public Response add(EntitySample es) {
         em.persist(es);
+        
+        return Response.status(Response.Status.CREATED)
+                .entity(getAll())
+                .build();
     }
 
     @Override
     @PUT
     @Path("/{id}")
-    public void update(@PathParam("id") Long id, EntitySample es) {
+    public Response update(@PathParam("id") Long id, EntitySample es) {
         EntitySample esFound = em.find(EntitySample.class, id);
         esFound.setVal1(es.getVal1());
         
-//        em.refresh(esFound);
+        return Response.status(Response.Status.OK)
+                .entity(esFound)
+                .build();
     }
 
     @Override
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         EntitySample esFound = em.find(EntitySample.class, id);
         em.remove(esFound);
+        
+        return Response.status(Response.Status.OK)
+                .entity(getAll())
+                .build();
     }
     
 }

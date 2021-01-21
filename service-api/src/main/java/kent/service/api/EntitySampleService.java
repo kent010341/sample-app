@@ -6,6 +6,7 @@
 package kent.service.api;
 
 import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -17,10 +18,10 @@ public interface EntitySampleService {
     
     EntitySample get(Long id);
     
-    void add(EntitySample es);
+    Response add(EntitySample es);
     
-    void update(Long id, EntitySample es);
+    Response update(Long id, EntitySample es);
     
-    void delete(Long id);
+    Response delete(Long id);
     
 }
