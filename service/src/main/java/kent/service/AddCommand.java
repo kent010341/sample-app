@@ -5,6 +5,7 @@
  */
 package kent.service;
 
+import kent.service.api.EntitySample;
 import kent.service.api.EntitySampleService;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -42,7 +43,10 @@ public class AddCommand implements Action {
         container = (BlueprintContainer) bundleContext.getService(refs[0]);
         
         EntitySampleService ess = (EntitySampleService)container.getComponentInstance("entitySampleService");
-        ess.add(val1);
+        
+        EntitySample es = new EntitySample();
+        es.setVal1(val1);
+        ess.add(es);
         System.out.println(val1);
         return null;
     }

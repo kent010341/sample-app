@@ -5,14 +5,23 @@
  */
 package kent.service.api;
 
+import java.util.List;
+import javax.ws.rs.core.Response;
+
 /**
  *
  * @author kent_chen
  */
 public interface EntitySampleService {
     
+    List<EntitySample> getAll();
+    
     EntitySample get(Long id);
     
-    void add(String val1);
+    Response add(EntitySample es);
+    
+    Response update(Long id, EntitySample es);
+    
+    Response delete(Long id);
     
 }
