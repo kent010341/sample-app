@@ -38,8 +38,8 @@
     
     <feature name="f-service" version="${project.version}">
         <feature>scr</feature>
-        <feature>http</feature>
         <feature>cxf</feature>
+        <feature>http</feature>
         
         <feature version="3.4.0" dependency="true">cxf-jaxrs</feature>
         <bundle dependency="true">mvn:com.fasterxml.jackson.core/jackson-core/2.10.2</bundle>
@@ -51,5 +51,11 @@
         
         <bundle>mvn:kent/service-api/${project.version}</bundle>
         <bundle>mvn:kent/service/${project.version}</bundle>
+    </feature>
+    
+    <feature name="f-service-whiteboard" version="${project.version}">
+        <feature>scr</feature>
+        <feature>http-whiteboard</feature>
+        <bundle>mvn:kent/service-whiteboard/${project.version}</bundle>
     </feature>
 </features>

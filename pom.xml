@@ -27,5 +27,6 @@
         <module>service</module>
         <module>service-api</module>
         <module>service-feature</module>
+        <module>service-whiteboard</module>
     </modules>
 </project>
