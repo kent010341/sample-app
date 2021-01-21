@@ -5,14 +5,22 @@
  */
 package kent.service.api;
 
+import java.util.List;
+
 /**
  *
  * @author kent_chen
  */
 public interface EntitySampleService {
     
+    List<EntitySample> getAll();
+    
     EntitySample get(Long id);
     
-    void add(String val1);
+    void add(EntitySample es);
+    
+    void update(Long id, EntitySample es);
+    
+    void delete(Long id);
     
 }
