@@ -12,76 +12,75 @@
             <div id="grid"></div>
             <script>
                 $(function () {
+                    var serviceBaseUrl = "http://localhost:8181/cxf/webapi/EntitySample/";
                     var ds = new kendo.data.DataSource({
-                            editable: true,
-                            transport: {
-                                read: {
-                                    url: "http://localhost:8181/cxf/webapi/EntitySample",
-                                    contentType: "application/json",
-                                    dataType: "json",
-                                    type: "GET"
-                                }, 
-//                                create: {
-//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
-//                                    contentType: "application/json",
-//                                    dataType: "json",
-//                                    type: "POST",
-//                                    data: function() {
-//                                        return {
-//                                            name: "demo_create",
-//                                            buydate: "demo_buydate"
-//                                        };
-//                                    }
-//                                },
-//                                update: {
-//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
-//                                    contentType: "application/json",
-//                                    dataType: "json",
-//                                    type: "PUT", 
-//                                    data: function() {
-//                                        return {
-//                                            name: "demo_create",
-//                                            buydate: "demo_buydate"
-//                                        };
-//                                    }
-//                                },
-//                                destroy: {
-//                                    url: "http://localhost:8080/jerseycp/webapi/tools",
-//                                    contentType: "application/json",
-//                                    dataType: "json",
-//                                    type: "DELETE"
-//                                }
-//                            },
-//                            parameterMap: function (options, operation) {
-//                                if (operation !== "read" && options.models) {
-//                                    return { models: kendo.stringify(options.models) };
-//                                }
-//                            },
-                            /*schema: {
-                                data: function(response) {
-                                    console.log("OK");
-                                    return response.json;
+                        edit: function(e) {
+                            console.log(e.model);
+                        },
+                        transport: {
+                            read: {
+                                url: serviceBaseUrl,
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "GET"
+                            }, 
+                            create: {
+                                url: serviceBaseUrl,
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "POST",
+                                data: function(options) {
+                                    return {
+                                        val1: options.models[0].val1
+                                    };
                                 }
-                            },*/
-                            pageSize: 20
+                            },
+                            update: {
+                                url: function(options) {
+                                    return serviceBaseUrl + options.models[0].id;
+                                },
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "PUT", 
+                                data: function(options) {
+                                    return {
+                                        val1: options.models[0].val1
+                                    };
+                                }
+                            },
+                            destroy: {
+                                url: function(options) {
+                                    return serviceBaseUrl + options.models[0].id;
+                                },
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "DELETE"
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return kendo.stringify(options.models[0]);
+                                }
+                            }
+                        },
+                        batch: true,
+                        pageSize: 20,
+                        schema: {
+                            model: {
+                                id: "id",
+                                fields: {
+                                    id: { editable: false, nullable: true },
+                                    val1: { validation: { required: true } }
+                                }
+                            }
                         }
                     });
 
                     ds.fetch(function() {
                         console.log("fetch success, length:" + ds.view().length);
                     });
-
-                    /*
-                    var ds = new kendo.data.DataSource({
-                        data: [{ContactName: "a", ContactTitle: "b", CompanyName: "c", Country: "d"}]
-                    });
-                    */
-                    
-                    
+                                   
                     var cols = [{field: "id"}, {field: "val1"}, {command: ["edit", "destroy"]}];
-                    //var cols = [{field: "ProductID"}, {field: "ProductName"}, {field: "UnitPrice"}, {field: "UnitsInStock"}, {field: "Discontinued"}];
-                    //var cols = [{field: "id"}, {field: "albumId"}, {field: "title"}, {field: "url"}, {field: "thumbnailUrl"}];
-                        
+                     
                     $("#grid").kendoGrid({
                         dataSource: ds,
                         height: 800,
