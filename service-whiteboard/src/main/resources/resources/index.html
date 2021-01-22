@@ -1,14 +1,104 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-    <title>Resource Example</title>
+        <title>Kendo UI Demo</title>
+        <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common.min.css" rel="stylesheet">
+        <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.default.min.css" rel="stylesheet">
+        <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jquery.min.js"></script>
+        <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
     </head>
     <body>
-    <h2>Resource Example</h2>
+        <div id="example">
+            <div id="grid"></div>
+            <script>
+                $(function () {
+                    var serviceBaseUrl = "http://localhost:8181/cxf/webapi/EntitySample/";
+                    var ds = new kendo.data.DataSource({
+                        edit: function(e) {
+                            console.log(e.model);
+                        },
+                        transport: {
+                            read: {
+                                url: serviceBaseUrl,
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "GET"
+                            }, 
+                            create: {
+                                url: serviceBaseUrl,
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "POST",
+                                data: function(options) {
+                                    return {
+                                        val1: options.models[0].val1
+                                    };
+                                }
+                            },
+                            update: {
+                                url: function(options) {
+                                    return serviceBaseUrl + options.models[0].id;
+                                },
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "PUT", 
+                                data: function(options) {
+                                    return {
+                                        val1: options.models[0].val1
+                                    };
+                                }
+                            },
+                            destroy: {
+                                url: function(options) {
+                                    return serviceBaseUrl + options.models[0].id;
+                                },
+                                contentType: "application/json",
+                                dataType: "json",
+                                type: "DELETE"
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return kendo.stringify(options.models[0]);
+                                }
+                            }
+                        },
+                        batch: true,
+                        pageSize: 20,
+                        schema: {
+                            model: {
+                                id: "id",
+                                fields: {
+                                    id: { editable: false, nullable: true },
+                                    val1: { validation: { required: true } }
+                                }
+                            }
+                        }
+                    });
+
+                    ds.fetch(function() {
+                        console.log("fetch success, length:" + ds.view().length);
+                    });
+                                   
+                    var cols = [{field: "id"}, {field: "val1"}, {command: ["edit", "destroy"]}];
+                     
+                    $("#grid").kendoGrid({
+                        dataSource: ds,
+                        height: 800,
+                        toolbar: ["create"],
+                        groupable: true,
+                        sortable: true,
+                        pageable: {
+                            refresh: true,
+                            pageSizes: true,
+                            buttonCount: 5
+                        },
+                        columns: cols,
+                        editable: "inline"
+                    });
+                    
+                });
+            </script>
+        </div>
+
     </body>
 </html>
