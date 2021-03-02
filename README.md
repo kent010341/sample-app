@@ -53,11 +53,11 @@ karaf@root()> feature:install cxf
 
 ### Install feature of sample-app
 
-1. Use maven to clean and install (use `-DskipTests` to skip the test phase)
+1. Use maven to clean and install (use `-DskipTests` to skip the test phase)  
   
-  ```
-  mvn clean install -DskipTests
-  ```  
+   ```
+   mvn clean install -DskipTests
+   ```  
 
 2. Add the feature of `sample-app`:  
  
@@ -98,5 +98,5 @@ After active `service-whiteboard`, open any browser and check [http://localhost:
 
 * As long as this website is loaded, it will send GET request.
 * Button "Add new record" send POST request.
-* Button in-line "Edit" send POST request.
+* Button in-line "Edit" send PUT request.
 * Button in-line "Delete" send DELETE request.
